@@ -20,7 +20,7 @@ To use the library, an instance of the thingspeak class should be instaniated. T
     ThingSpeakLibrary::ThingSpeak thingspeak ("YOUR-CHANNEL-KEY");
 ```
 
-### 2. Set values
+### 3. Set values
 
 There are two steps in sending values to thingspeak. Initially values must be given to some or all of the 9 fields supported by the thingspeak channel. The example belows sets a random integer to field 1:
 
@@ -29,7 +29,7 @@ int rand = random(100);
 thingspeak.recordValue(1, String(rand, DEC));
 ```
 
-### 3. Send values
+### 4. Send values
 
 After setting, the values must be sent to thingspeak. The sendValues method constructs a GET query to the thingspeak API using any set values. Once the sendValues method has been called all the values are emptied. The example below sends any set values:
 
