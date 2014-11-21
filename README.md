@@ -14,7 +14,7 @@ Include the library from the [Spark IDE](https://www.spark.io/build) or download
 
 ### 2. Create thingspeak object
 
-To use the library, an instance of the thingspeak class should be instaniated. The constructor requires a channel API key to be provided. This key can be obtained from the thingspeak website, more details available [here](https://thingspeak.com/docs/channels#api_keys). 
+To use the library, an instance of the thingspeak class should be instantiated. The constructor requires a channel API key to be provided. This key can be obtained from the thingspeak website, more details available [here](https://thingspeak.com/docs/channels#api_keys). 
 
 ```cpp
     ThingSpeakLibrary::ThingSpeak thingspeak ("YOUR-CHANNEL-KEY");
@@ -22,7 +22,7 @@ To use the library, an instance of the thingspeak class should be instaniated. T
 
 ### 3. Set values
 
-There are two steps in sending values to thingspeak. Initially values must be given to some or all of the 9 fields supported by the thingspeak channel. The example belows sets a random integer to field 1:
+There are two steps in sending values to thingspeak. Initially values must be given to some or all of the 9 fields supported by the thingspeak channel. The example below sets a random integer to field 1:
 
 ```cpp
 int rand = random(100);
@@ -43,6 +43,16 @@ if(valsSent) {
 ```
 
 Note: Values will be emptied after each send, if you want to maintain a value this should be set before each sendValues call.
+
+## Configuration
+
+### Set connection timeout
+
+After sending values to thingspeak, the library will wait up to a specified timeout for a response. Once a response is received or the timeout is met, the connection is closed. Waiting for a response before closing the connection ensures that the data was successfully sent. The value of the timeout can be set using the setConnectionTimeout method. The default is 1500 ms.
+
+```cpp
+    thingspeak.setConnectionTimeout(1500);
+```
 
 ## Examples
 

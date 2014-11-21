@@ -3,6 +3,12 @@
 ThingSpeakLibrary::ThingSpeak::ThingSpeak(String apiKey) 
 {
     key = apiKey;
+    timeout= DEFAULT_RESPONSE_WAIT_TIME;
+}
+
+void ThingSpeakLibrary::ThingSpeak::setConnectionTimeout(uint32_t milliseconds) 
+{
+    this->timeout = milliseconds;   
 }
 
 bool ThingSpeakLibrary::ThingSpeak::recordValue(int fieldId, String fieldValue)
@@ -39,13 +45,11 @@ bool ThingSpeakLibrary::ThingSpeak::sendValues()
         client.println("Content-Length: 0");
         client.println();
         
-        int i = 0;
         uint32_t lastRead = millis();
-        while ((millis() - lastRead) < RESPONSE_WAIT_TIME) {
+        while (!ret && (millis() - lastRead) < this->timeout) {
             while (client.available() > 0) {
                 ret = true;
                 client.flush();
-                lastRead = millis();
             }
         }
         client.flush();
