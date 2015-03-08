@@ -44,16 +44,18 @@ bool ThingSpeakLibrary::ThingSpeak::sendValues()
         client.println(String("Host: " + String(THINGSPEAK_API)));
         client.println("Content-Length: 0");
         client.println();
-        
-        uint32_t lastRead = millis();
-        while (!ret && (millis() - lastRead) < this->timeout) {
-            while (client.available() > 0) {
+		
+		unsigned long lastTime = millis();
+        while( client.available() == 0 && millis()-lastTime < this->timeout ) { 
+        }  
+        lastTime = millis();
+        while ( client.available() || (millis()-lastTime < this->timeout) ) {
+            if (client.available()) {
                 ret = true;
-                client.flush();
+                client.read();
+                lastTime = millis();
             }
         }
-        client.flush();
-        client.stop();
         
         return ret;
     }
